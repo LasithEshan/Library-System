@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h4 class="display-4 ">Latest Arrivals</h4>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <app-book-item *ngFor="let book of books"
+                   [bookItem]="book"></app-book-item>
+  </div>
+</div>

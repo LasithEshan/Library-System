@@ -1,0 +1,16 @@
+<a
+   class="list-group-item clearfix mr-4 mb-4"
+   (click)="onBookItemClicked()">
+
+  <div class="float-left">
+    <h4 class="text-dark">{{bookItem.name}}</h4>
+    <p class="text-dark">{{bookItem.author}}</p>
+    <p class="text-black-50">{{bookItem.description}}</p>
+  </div>
+  <span class="float-right">
+    <img src={{bookItem.imagePath}}
+         alt="image"
+         class="img-fluid"
+         style="max-height: 50px">
+  </span>
+</a>
