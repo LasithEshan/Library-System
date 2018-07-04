@@ -1,46 +1,43 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const config = require('./config/database');
+const passport = require('passport');
+
+mongoose.connect(config.database);
+mongoose.connection.on('connected', ()=> {
+  console.log('connected database' + config.database);
+});
 
 const app = express();
+const books = require('./routes/books');
+const users = require('./routes/users');
+
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*" );
   res.setHeader("Access-Control-Allow-Headers", "origin, X-Requested-With, Content-Type, Accept");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
   next();
-})
+});
 
-app.use("/api/books",(req, res, next) => {
+app.use(bodyParser.json());
 
-  const books  = [
-    {isbn:'44646',
-      name:'serverbook',
-      author: 'server',
-      description:'This is a server book',
-      imagePath:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT65GN2HSrJOKvWnaE0yoGcbn9KbUM0jGTePqGCc8TO8VMjY8iH',
-      copiesAvailable:5
-    },
-    {isbn:'446d2446',
-      name:'serverbook2',
-      author: 'server',
-      description:'This is a server book',
-      imagePath:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT65GN2HSrJOKvWnaE0yoGcbn9KbUM0jGTePqGCc8TO8VMjY8iH',
-      copiesAvailable:3
-    }, {isbn:'446dsa46',
-      name:'serverbook3',
-      author: 'server',
-      description:'This is a server book',
-      imagePath:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT65GN2HSrJOKvWnaE0yoGcbn9KbUM0jGTePqGCc8TO8VMjY8iH',
-      copiesAvailable:5
-    }
-  ];
+app.use(passport.initialize());
 
-  res.status(200).json({
-    message:'success',
-    serverBooks: books
-  });
-})
+app.use(passport.session());
+
+require('./config/passport')(passport);
+app.use('/books', books);
+
+app.use('/users', users);
 
 
 
-module.exports = app;
+app.listen(3000, () => {
+  console.log('Server started at port 3000');
+});
+
+
+
 

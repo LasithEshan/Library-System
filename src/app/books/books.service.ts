@@ -23,13 +23,15 @@ export class BooksService {
   constructor(private http: HttpClient) {}
 
   getBooks() {
-    this.http.get<{message: string, serverBooks: Books[]}>('http://localhost:3000/api/books').subscribe( (bookData) => {
+    this.http.get<{message: string, serverBooks: Books[]}>('http://localhost:3000/books/load').subscribe( (bookData) => {
 
       this.books = bookData.serverBooks;
       this.booksUpdated.next([...this.books]);
     });
 
   }
+
+
 
   getBooksUpdated() {
     return this.booksUpdated.asObservable();

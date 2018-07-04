@@ -14,6 +14,7 @@ import { BookItemComponent } from './books/books-list/book-item/book-item.compon
 import {RouterModule, Routes} from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import {BooksService} from './books/books.service';
+import { AddBookComponent } from './books/add-book/add-book.component';
 
 const appRoutes: Routes = [
   {path: 'books', component: BooksComponent},
@@ -34,6 +35,7 @@ const appRoutes: Routes = [
     BooksDetailComponent,
     BookItemComponent,
     LoginComponent,
+    AddBookComponent,
 
   ],
   imports: [
